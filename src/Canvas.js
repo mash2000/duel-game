@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from 'react';
 
 const Canvas = ({ onHeroClick }) => {
   const canvasRef = useRef(null);
-  const [heroes, setHeroes] = useState([
+  const [heroes] = useState([
     {
       x: 50, y: 300, radius: 20, color: 'blue', direction: 1, speed: 2, spellColor: 'blue', shootFrequency: 0.01, shootSpeed: 2, spells: [],
     },
@@ -65,23 +65,6 @@ const Canvas = ({ onHeroClick }) => {
     const rect = canvas.getBoundingClientRect();
     const mouseX = event.clientX - rect.left;
     const mouseY = event.clientY - rect.top;
-
-    setHeroes(prevHeroes => prevHeroes.map(hero => {
-      const dist = Math.sqrt((hero.x - mouseX) ** 2 + (hero.y - mouseY) ** 2);
-      if (dist < hero.radius) {
-        // Выпускаем заклинание
-        const spell = {
-          x: hero.x,
-          y: hero.y,
-          radius: 5,
-          color: hero.color,
-          direction: hero.direction,
-          speed: hero.shootSpeed,
-        };
-        return { ...hero, spells: [...hero.spells, spell] };
-      }
-      return hero;
-    }));
 
     heroes.forEach(hero => {
       const dist = Math.sqrt((hero.x - mouseX) ** 2 + (hero.y - mouseY) ** 2);
