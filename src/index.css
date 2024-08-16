@@ -15,3 +15,9 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   position: relative;
 }
+
+.title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
