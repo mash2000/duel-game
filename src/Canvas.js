@@ -5,10 +5,10 @@ const Canvas = ({ onHeroClick }) => {
   const canvasRef = useRef(null);
   const [heroes] = useState([
     {
-      x: 50, y: 300, radius: 20, color: 'blue', direction: 1, speed: 2, spellColor: '#0000ff', shootFrequency: 0.01, shootSpeed: 2, spells: [],
+      x: 50, y: 300, radius: 20, color: 'blue', direction: 1, shootDirection: -1, speed: 2, spellRadius: 5, spellColor: '#0000ff', shootFrequency: 0.05, shootSpeed: 5, spells: [],
     },
     {
-      x: 750, y: 300, radius: 20, color: 'red', direction: -1, speed: 2, spellColor: '#ff0000', shootFrequency: 0.01, shootSpeed: 2, spells: [],
+      x: 750, y: 300, radius: 20, color: 'red', direction: -1, shootDirection: 1, speed: 2, spellRadius: 5, spellColor: '#ff0000', shootFrequency: 0.05, shootSpeed: 5, spells: [],
     },
   ]);
 
@@ -34,20 +34,28 @@ const Canvas = ({ onHeroClick }) => {
         ctx.fill();
         ctx.closePath();
 
-        hero.spells.forEach((spell, index) => {
-          spell.x += spell.direction * spell.speed;
+        // Стрельба
+        if (Math.random() < hero.shootFrequency) {
+          hero.spells.push({ x: hero.x, y: hero.y, radius: hero.spellRadius, speed: hero.shootSpeed, color: hero.spellColor });
+        }
 
-          // Убираем заклинание, если оно улетело за край экрана
+        // Обновление позиции пуль
+        hero.spells.forEach((spell, index) => {
           if (spell.x > canvas.width || spell.x < 0) {
             hero.spells.splice(index, 1);
           }
+          spell.x -= spell.speed * hero.shootDirection;
+        });
 
+        // Отрисовка пуль
+        hero.spells.forEach(spell => {
           ctx.beginPath();
-          ctx.arc(spell.x, spell.y, spell.radius, 0, Math.PI * 2);
+          ctx.arc(spell.x, spell.y, 3, 0, 2 * Math.PI);
           ctx.fillStyle = spell.color;
           ctx.fill();
-          ctx.closePath();
         });
+
+        console.log(hero.spells);
       });
 
       animationFrameId = requestAnimationFrame(draw);
