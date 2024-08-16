@@ -11,13 +11,13 @@ const HeroProperties = ({ selectedHero, onChange }) => {
     <div>
       {selectedHero && (
         <div>
-          <h2>Hero {selectedHero.color}</h2>
+          <h2>Hero {selectedHero.spellColor}</h2>
           <label>
             Shoot Color:
             <input
               type="color"
-              name="color"
-              value={selectedHero.color}
+              name="spellColor"
+              value={selectedHero.spellColor}
               onChange={handleInputChange}
             />
           </label>

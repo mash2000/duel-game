@@ -5,10 +5,10 @@ const Canvas = ({ onHeroClick }) => {
   const canvasRef = useRef(null);
   const [heroes] = useState([
     {
-      x: 50, y: 300, radius: 20, color: 'blue', direction: 1, speed: 2, spellColor: 'blue', shootFrequency: 0.01, shootSpeed: 2, spells: [],
+      x: 50, y: 300, radius: 20, color: 'blue', direction: 1, speed: 2, spellColor: '#0000ff', shootFrequency: 0.01, shootSpeed: 2, spells: [],
     },
     {
-      x: 750, y: 300, radius: 20, color: 'red', direction: -1, speed: 2, spellColor: 'blue', shootFrequency: 0.01, shootSpeed: 2, spells: [],
+      x: 750, y: 300, radius: 20, color: 'red', direction: -1, speed: 2, spellColor: '#ff0000', shootFrequency: 0.01, shootSpeed: 2, spells: [],
     },
   ]);
 
