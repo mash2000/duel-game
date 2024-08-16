@@ -21,27 +21,6 @@ const HeroProperties = ({ selectedHero, onChange }) => {
               onChange={handleInputChange}
             />
           </label>
-          <br />
-          <label>
-            Speed X:
-            <input
-              type="number"
-              name="speedX"
-              value={selectedHero.speedX}
-              onChange={handleInputChange}
-            />
-          </label>
-          <br />
-          <label>
-            Speed Y:
-            <input
-              type="number"
-              name="speedY"
-              value={selectedHero.speedY}
-              onChange={handleInputChange}
-            />
-          </label>
-          <br />
         </div>
       )}
     </div>
