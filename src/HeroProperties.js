@@ -11,9 +11,9 @@ const HeroProperties = ({ selectedHero, onChange }) => {
     <div>
       {selectedHero && (
         <div>
-          <h2>Hero's Properties</h2>
+          <h2>Hero {selectedHero.color}</h2>
           <label>
-            Цвет:
+            Shoot Color:
             <input
               type="color"
               name="color"
