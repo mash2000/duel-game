@@ -3,6 +3,11 @@ import React, { useState } from 'react';
 import Canvas from './Canvas';
 
 const App = () => {
+  const handleHeroClick = (hero) => {
+    alert(`¬ы нажали на геро€: ${hero.color}`);
+    // «десь вы можете добавить логику дл€ атаки или других действий.
+  };
+
   const [heroConfigs, setHeroConfigs] = useState([
     { spellColor: 'green', shootFrequency: 0.01, speed: 2 },
     { spellColor: 'purple', shootFrequency: 0.01, speed: 2 },
@@ -22,7 +27,7 @@ const App = () => {
 
   return (
     <div>
-      <Canvas heroConfigs={heroConfigs} />
+      <Canvas onHeroClick={handleHeroClick} heroConfigs={heroConfigs} />
       <div className="controls">
         {heroConfigs.map((config, index) => (
           <div key={index}>

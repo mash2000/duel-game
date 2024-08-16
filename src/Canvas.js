@@ -20,19 +20,22 @@ const Canvas = ({ onHeroClick, heroConfigs }) => {
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      heroes.forEach((hero) => {
-        ctx.fillStyle = hero.color;
+      heroes.forEach(hero => {
+        hero.x += hero.direction * hero.speed;
+        
+        // Простейшие столкновения с краями экрана
+        if (hero.x + hero.radius > canvas.width || hero.x - hero.radius < 0) {
+          hero.direction *= -1;
+        }
+
         ctx.beginPath();
         ctx.arc(hero.x, hero.y, hero.radius, 0, Math.PI * 2);
+        ctx.fillStyle = hero.color;
         ctx.fill();
-
-        hero.spells.forEach((spell) => {
-          ctx.fillStyle = spell.color;
-          ctx.beginPath();
-          ctx.arc(spell.x, spell.y, spell.radius, 0, Math.PI * 2);
-          ctx.fill();
-        });
+        ctx.closePath();
       });
+
+      animationFrameId = requestAnimationFrame(draw);
     };
 
     const update = () => {
@@ -75,9 +78,31 @@ const Canvas = ({ onHeroClick, heroConfigs }) => {
     render();
 
     return () => cancelAnimationFrame(animationFrameId);
-  }, [heroConfigs]);
+  }, [heroConfigs, heroes]);
 
-  return <canvas ref={canvasRef} width={800} height={600} />;
+  const handleClick = (event) => {
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+
+    heroes.forEach(hero => {
+      const dist = Math.sqrt((hero.x - mouseX) ** 2 + (hero.y - mouseY) ** 2);
+      if (dist < hero.radius) {
+        onHeroClick(hero);
+      }
+    });
+  };
+
+  return (
+    <canvas
+      ref={canvasRef}
+      width={800}
+      height={600}
+      onClick={handleClick}
+      style={{ border: '1px solid black' }}
+    />
+  );
 };
 
 export default Canvas;
